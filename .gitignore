@@ -2,4 +2,4 @@
 sqlite-bench
 *.db
 *.shm
-*.wal
+*.db-wal
