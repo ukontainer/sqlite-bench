@@ -1,0 +1,5 @@
+*.o
+sqlite-bench
+*.db
+*.shm
+*.wal
