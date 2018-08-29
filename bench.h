@@ -109,12 +109,14 @@ void histogram_add(Histogram*, double);
 void histogram_merge(Histogram*, const Histogram*);
 char* histogram_to_string(Histogram*);
 
-/* util.c */
+/* random.c */
 void rand_init(Random*, uint32_t);
 uint32_t rand_next(Random*);
 uint32_t rand_uniform(Random*, int);
 void rand_gen_init(RandomGenerator*, double);
 char* rand_gen_generate(RandomGenerator*, int);
+
+/* util.c */
 uint64_t now_micros(void);
 bool starts_with(const char*, const char*);
 char* trim_space(const char*);
