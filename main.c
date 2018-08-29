@@ -130,9 +130,8 @@ int main(int argc, char** argv) {
   }
 
   /* Choose a location for the test database if none given with --db=<path>  */
-  if (FLAGS_db == NULL) {
-      FLAGS_db = strcat(default_db_path, "/dbbench");
-  }
+  if (FLAGS_db == NULL)
+      FLAGS_db = default_db_path;
 
   benchmark_init();
   benchmark_run();
