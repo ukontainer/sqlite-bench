@@ -245,7 +245,7 @@ void benchmark_run() {
       name = benchmarks;
       benchmarks = NULL;
     } else {
-      name = malloc(sizeof(char) * (sep - benchmarks + 1));
+      name = calloc(sizeof(char), (sep - benchmarks + 1));
       strncpy(name, benchmarks, sep - benchmarks);
       benchmarks = sep + 1;
     }
