@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
     double d;
     int n;
     char junk;
-    if (starts_with("--benchmarks=", argv[i])) {
+    if (starts_with(argv[i], "--benchmarks=")) {
       FLAGS_benchmarks = argv[i] + strlen("--benchmarks=");
     } else if (sscanf(argv[i], "--histogram=%d%c", &n, &junk) == 1 &&
                (n == 0 || n == 1)) {
