@@ -10,7 +10,7 @@ $(TARGET): $(OBJS)
 
 $(OBJS): $(HDRS)
 
-bench: $(TARGET)
+bench: $(TARGET) clean-db
 	./$(TARGET)
 
 clean:
