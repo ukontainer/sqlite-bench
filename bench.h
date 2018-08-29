@@ -6,6 +6,7 @@
 #define BENCH_H_
 
 #include <assert.h>
+#include <ctype.h>
 #include <dirent.h>
 #include <math.h>
 #include <stdbool.h>
@@ -116,5 +117,6 @@ void rand_gen_init(RandomGenerator*, double);
 char* rand_gen_generate(RandomGenerator*, int);
 uint64_t now_micros(void);
 bool starts_with(const char*, const char*);
+char* trim_space(const char*);
 
 #endif /* BENCH_H_ */

@@ -109,22 +109,26 @@ static void print_environment() {
     char* cpu_type = malloc(sizeof(char) * 1000);
     char* cache_size = malloc(sizeof(char) * 1000);
     while (fgets(line, sizeof(line), cpuinfo) != NULL) {
-      const char* sep = strchr(line, ':');
+      char* sep = strchr(line, ':');
       if (sep == NULL) {
         continue;
       }
-      char* key = malloc(sizeof(char) * (sep - 1 - line + 1));
-      char* val = malloc(sizeof(char) * ((line + 1000) - sep + 1));
+      char* key = calloc(sizeof(char), 1000);
+      char* val = calloc(sizeof(char), 1000);
       strncpy(key, line, sep - 1 - line);
-      strcpy(val, sep);
-      if (strcmp(key, "model name")) {
-        ++num_cpus;
-        strcpy(cpu_type, val);
-      } else if (strcmp(key, "cache size")) {
-        strcpy(cache_size, val);
-      }
+      strcpy(val, sep + 1);
+      char* trimed_key = trim_space(key);
+      char* trimed_val = trim_space(val);
       free(key);
       free(val);
+      if (!strcmp(trimed_key, "model name")) {
+        ++num_cpus;
+        strcpy(cpu_type, trimed_val);
+      } else if (!strcmp(trimed_key, "cache size")) {
+        strcpy(cache_size, trimed_val);
+      }
+      free(trimed_key);
+      free(trimed_val);
     }
     fclose(cpuinfo);
     fprintf(stderr, "CPU:        %d * %s\n", num_cpus, cpu_type);
@@ -138,6 +142,7 @@ static void print_environment() {
 static void start() {
   start_ =  now_micros() * 1e-6;
   bytes_ = 0;
+  message_ = malloc(sizeof(char) * 10000);
   strcpy(message_, "");
   last_op_finish_ = start_;
   histogram_clear(&hist_);
@@ -181,7 +186,7 @@ static void stop(const char* name) {
     char *rate = malloc(sizeof(char) * 100);;
     snprintf(rate, strlen(rate), "%6.1f MB/s",
               (bytes_ / 1048576.0) / (finish - start_));
-    if (message_ && strcmp(message_, "")) {
+    if (message_ && !strcmp(message_, "")) {
       message_ = strcat(strcat(rate, " "), message_);
     } else {
       message_ = rate;
@@ -219,6 +224,7 @@ void benchmark_init() {
       }
     }
   }
+  closedir(test_dir);
 }
 
 void benchmark_fini() {

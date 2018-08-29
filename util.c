@@ -112,3 +112,20 @@ bool starts_with(const char* pre, const char* str) {
   return lenstr < lenpre ? false : !strncmp(pre, str, lenpre);
 }
 
+char* trim_space(const char* s) {
+  size_t start = 0;
+  while (start < strlen(s) && isspace(s[start])) {
+    start++;
+  }
+  size_t limit = strlen(s);
+  while (limit > start && isspace(s[limit - 1])) {
+    limit--;
+  }
+
+  char* res = calloc(sizeof(char), limit - start + 1);
+  for (size_t i = 0; i < limit - start; i++)
+    res[i] = s[start + i];
+  res[limit - start] = '\0';
+
+  return res;
+}
