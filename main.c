@@ -49,6 +49,40 @@ void init() {
   FLAGS_db = NULL;
 }
 
+void print_usage(const char* argv0) {
+  fprintf(stderr, "Usage: %s [OPTION]...\n", argv0);
+  fprintf(stderr, "SQLite3 benchmark tool\n");
+  fprintf(stderr, "[OPTION]\n");
+  fprintf(stderr, "  --benchmarks=[BENCH]\t\tspecify benchmark\n");
+  fprintf(stderr, "  --histogram={0,1}\t\trecord histogram\n");
+  fprintf(stderr, "  --compression_ratio=DOUBLE\tcompression ratio\n");
+  fprintf(stderr, "  --use_existing_db={0,1}\tuse existing database\n");
+  fprintf(stderr, "  --num=INT\t\t\tnumber of entries\n");
+  fprintf(stderr, "  --reads=INT\t\t\tnumber of reads\n");
+  fprintf(stderr, "  --value_size=INT\t\tvalue size\n");
+  fprintf(stderr, "  --no_transaction\t\tdisable transaction\n");
+  fprintf(stderr, "  --page_size=INT\t\tpage size\n");
+  fprintf(stderr, "  --num_pages=INT\t\tnumber of pages\n");
+  fprintf(stderr, "  --WAL-enabled={0,1}\t\tenable WAL\n");
+  fprintf(stderr, "  --db=PATH\t\t\tpath to location databases are created\n");
+  fprintf(stderr, "  --help\t\t\tshow this help\n");
+  fprintf(stderr, "\n");
+  fprintf(stderr, "[BENCH]\n");
+  fprintf(stderr, "  fillseq\twrite N values in sequential key order in async mode\n");
+  fprintf(stderr, "  fillseqsync\twrite N/100 values in sequential key order in sync mode\n");
+  fprintf(stderr, "  fillseqbatch\tbatch write N values in sequential key order in async mode\n");
+  fprintf(stderr, "  fillrandom\twrite N values in random key order in async mode\n");
+  fprintf(stderr, "  fillrandsync\twrite N/100 values in random key order in sync mode\n");
+  fprintf(stderr, "  fillrandbatch\tbatch write N values in random key order in async mode\n");
+  fprintf(stderr, "  overwrite\toverwrite N values in random key order in async mode\n");
+  fprintf(stderr, "  fillrand100K\twrite N/1000 100K values in random order in async mode\n");
+  fprintf(stderr, "  fillseq100K\twirte N/1000 100K values in sequential order in async mode\n");
+  fprintf(stderr, "  readseq\tread N times sequentially\n");
+  fprintf(stderr, "  readrandom\tread N times in random order\n");
+  fprintf(stderr, "  readrand100K\tread N/1000 100K values in sequential order in async mode\n");
+
+}
+
 int main(int argc, char** argv) {
   init();
 
@@ -86,6 +120,9 @@ int main(int argc, char** argv) {
       FLAGS_WAL_enabled = n;
     } else if (strncmp(argv[i], "--db=", 5) == 0) {
       FLAGS_db = argv[i] + 5;
+    } else if (!strcmp(argv[i], "--help")) {
+      print_usage(argv[0]);
+      exit(0);
     } else {
       fprintf(stderr, "Invalid flag '%s'\n", argv[i]);
       exit(1);
