@@ -78,11 +78,13 @@ void rand_gen_init(RandomGenerator* gen_, double compression_ratio) {
   rand_init(&rnd, 301);
   while (gen_->data_size_ < 1048576) {
     compressible_string(&rnd, compression_ratio, 100, piece);
-    strcpy(gen_->data_, piece);
+    strcat(gen_->data_, piece);
     gen_->data_size_ += strlen(piece);
-    free(piece);
   }
+
+  free(piece);
 }
+
 char* rand_gen_generate(RandomGenerator* gen_, int len) {
   if (gen_->pos_ + len > gen_->data_size_) {
     gen_->pos_ = 0;
