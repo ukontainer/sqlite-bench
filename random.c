@@ -5,7 +5,7 @@
 #include "bench.h"
 
 static char *random_string(Random*, int);
-static char *compressible_string(Random*, double, size_t, char*);
+static char *compressible_string(Random*, double, size_t);
 
 /*
  * https://github.com/google/leveldb/blob/master/util/testutil.cc
@@ -21,14 +21,14 @@ static char *random_string(Random* rnd, int len) {
 }
 
 static char *compressible_string(Random* rnd, double compressed_fraction,
-                                  size_t len, char* dst) {
+                                  size_t len) {
   int raw = (int)(len * compressed_fraction);
   if (raw < 1) raw = 1;
   char* raw_data = random_string(rnd, raw);
   size_t raw_data_len = strlen(raw_data);
 
   int pos = 0;
-  dst = malloc(sizeof(char) * (len + 1));
+  char* dst = malloc(sizeof(char) * (len + 1));
   dst[0] = '\0';
   while (pos < len) {
     strcat(dst, raw_data);
@@ -68,7 +68,7 @@ uint32_t rand_uniform(Random* rand_, int n) { return rand_next(rand_) % n; }
 
 void rand_gen_init(RandomGenerator* gen_, double compression_ratio) {
   Random rnd;
-  char* piece = malloc(sizeof(char) * 101);
+  char* piece;
   
   gen_->data_ = malloc(sizeof(char) * 1048576);
   gen_->data_size_ = 0;
@@ -77,7 +77,7 @@ void rand_gen_init(RandomGenerator* gen_, double compression_ratio) {
 
   rand_init(&rnd, 301);
   while (gen_->data_size_ < 1048576) {
-    compressible_string(&rnd, compression_ratio, 100, piece);
+    piece = compressible_string(&rnd, compression_ratio, 100);
     strcat(gen_->data_, piece);
     gen_->data_size_ += strlen(piece);
   }
