@@ -1,4 +1,4 @@
-CFLAGS=-Wall -I. -O0 -g
+CFLAGS=-Wall -I. -O2 -DNDEBUG
 LDFLAGS=-lpthread -ldl -lm
 SRCS=$(wildcard *.c)
 OBJS=$(SRCS:.c=.o)
