@@ -10,7 +10,13 @@ $(TARGET): $(OBJS)
 
 $(OBJS): $(HDRS)
 
+bench: $(TARGET)
+	./$(TARGET)
+
 clean:
 	rm -f $(TARGET) *.o
 
-.PHONY: clean
+clean-db:
+	rm -f dbbench_sqlite3*
+
+.PHONY: bench clean clean-db
