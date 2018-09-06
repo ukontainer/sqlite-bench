@@ -20,6 +20,7 @@
 
 #define TEST_DIR "./"
 #define kNumBuckets 154
+#define kNumData 1000000
 
 typedef struct Histogram {
   double min_;
@@ -29,6 +30,12 @@ typedef struct Histogram {
   double sum_squares_;
   double buckets_[kNumBuckets];
 } Histogram;
+
+typedef struct Raw {
+  double *data_;
+  size_t data_size_;
+  int pos_;
+} Raw;
 
 typedef struct Random {
   uint32_t seed_;
@@ -69,6 +76,9 @@ int FLAGS_value_size;
 // Print histogram of operation timings
 bool FLAGS_histogram;
 
+// Print raw data
+bool FLAGS_raw;
+
 // Arrange to generate values that shrink to this fraction of
 // their original size after compression
 double FLAGS_compression_ratio;
@@ -108,6 +118,12 @@ void histogram_clear(Histogram*);
 void histogram_add(Histogram*, double);
 void histogram_merge(Histogram*, const Histogram*);
 char* histogram_to_string(Histogram*);
+
+/* Raw */
+void raw_clear(Raw *);
+void raw_add(Raw *, double);
+char* raw_to_string(Raw *);
+void raw_print(FILE *, Raw *);
 
 /* random.c */
 void rand_init(Random*, uint32_t);

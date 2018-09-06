@@ -40,6 +40,7 @@ void init() {
   FLAGS_reads = -1;
   FLAGS_value_size = 100;
   FLAGS_histogram = false;
+  FLAGS_raw = false,
   FLAGS_compression_ratio = 0.5;
   FLAGS_page_size = 1024;
   FLAGS_num_pages = 4096;
@@ -55,6 +56,7 @@ void print_usage(const char* argv0) {
   fprintf(stderr, "[OPTION]\n");
   fprintf(stderr, "  --benchmarks=[BENCH]\t\tspecify benchmark\n");
   fprintf(stderr, "  --histogram={0,1}\t\trecord histogram\n");
+  fprintf(stderr, "  --raw={0,1}\t\toutput raw data\n");
   fprintf(stderr, "  --compression_ratio=DOUBLE\tcompression ratio\n");
   fprintf(stderr, "  --use_existing_db={0,1}\tuse existing database\n");
   fprintf(stderr, "  --num=INT\t\t\tnumber of entries\n");
@@ -98,6 +100,9 @@ int main(int argc, char** argv) {
     } else if (sscanf(argv[i], "--histogram=%d%c", &n, &junk) == 1 &&
                (n == 0 || n == 1)) {
       FLAGS_histogram = n;
+    } else if (sscanf(argv[i], "--raw=%d%c", &n, &junk) == 1 &&
+               (n == 0 || n == 1)) {
+      FLAGS_raw = n;
     } else if (sscanf(argv[i], "--compression_ratio=%lf%c", &d, &junk) == 1) {
       FLAGS_compression_ratio = d;
     } else if (sscanf(argv[i], "--use_existing_db=%d%c", &n, &junk) == 1 &&

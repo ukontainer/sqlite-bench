@@ -23,6 +23,7 @@ double last_op_finish_;
 int64_t bytes_;
 char* message_;
 Histogram hist_;
+Raw raw_;
 RandomGenerator gen_;
 Random rand_;
 
@@ -146,22 +147,27 @@ static void start() {
   strcpy(message_, "");
   last_op_finish_ = start_;
   histogram_clear(&hist_);
+  raw_clear(&raw_);
   done_ = 0;
   next_report_ = 100;
 }
 
 void finished_single_op() {
-  if (FLAGS_histogram) {
+  if (FLAGS_histogram || FLAGS_raw) {
     double now = now_micros() * 1e-6;
     double micros = (now - last_op_finish_) * 1e6;
-    histogram_add(&hist_, micros);
-    if (micros > 20000) {
-      fprintf(stderr, "long op: %.1f micros%30s\r", micros, "");
-      fflush(stderr);
+    if (FLAGS_histogram) {
+      histogram_add(&hist_, micros);
+      if (micros > 20000) {
+        fprintf(stderr, "long op: %.1f micros%30s\r", micros, "");
+        fflush(stderr);
+      }
+    }
+    if (FLAGS_raw) {
+      raw_add(&raw_, micros);
     }
     last_op_finish_ = now;
   }
-
 
   done_++;
   if (done_ >= next_report_) {
@@ -198,6 +204,9 @@ static void stop(const char* name) {
           (finish - start_) * 1e6 / done_,
           (!message_ || !strcmp(message_, "") ? "" : " "),
           (!message_) ? "" : message_);
+  if (FLAGS_raw) {
+    raw_print(stdout, &raw_);
+  }
   if (FLAGS_histogram) {
     fprintf(stdout, "Microseconds per op:\n%s\n",
             histogram_to_string(&hist_));
