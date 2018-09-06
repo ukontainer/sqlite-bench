@@ -205,6 +205,7 @@ static void stop(const char* name) {
           (!message_ || !strcmp(message_, "") ? "" : " "),
           (!message_) ? "" : message_);
   if (FLAGS_raw) {
+    fprintf(stdout, "Unit: Microsecond\n");
     raw_print(stdout, &raw_);
   }
   if (FLAGS_histogram) {
