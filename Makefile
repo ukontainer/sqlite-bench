@@ -6,7 +6,7 @@ HDRS=$(wildcard *.h)
 TARGET=sqlite-bench
 
 $(TARGET): $(OBJS)
-	cc -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(OBJS): $(HDRS)
 
