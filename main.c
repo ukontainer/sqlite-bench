@@ -63,7 +63,7 @@ void print_usage(const char* argv0) {
   fprintf(stderr, "  --no_transaction\t\tdisable transaction\n");
   fprintf(stderr, "  --page_size=INT\t\tpage size\n");
   fprintf(stderr, "  --num_pages=INT\t\tnumber of pages\n");
-  fprintf(stderr, "  --WAL-enabled={0,1}\t\tenable WAL\n");
+  fprintf(stderr, "  --WAL_enabled={0,1}\t\tenable WAL\n");
   fprintf(stderr, "  --db=PATH\t\t\tpath to location databases are created\n");
   fprintf(stderr, "  --help\t\t\tshow this help\n");
   fprintf(stderr, "\n");

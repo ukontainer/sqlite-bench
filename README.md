@@ -29,7 +29,7 @@ SQLite3 benchmark tool
   --no_transaction              disable transaction
   --page_size=INT               page size
   --num_pages=INT               number of pages
-  --WAL-enabled={0,1}           enable WAL
+  --WAL_enabled={0,1}           enable WAL
   --db=PATH                     path to location databases are created
   --help                        show this help
 
