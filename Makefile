@@ -1,3 +1,4 @@
+CC=x86_64-rumprun-linux-cc
 CFLAGS=-Wall -I. -O2 -DNDEBUG
 LDFLAGS=-lpthread -ldl -lm
 SRCS=$(wildcard *.c)
