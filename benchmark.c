@@ -33,6 +33,7 @@ int next_report_;
 static void print_header(void);
 static void print_warnings(void);
 static void print_environment(void);
+static void error_log_callback(void *, int, const char *);
 static void start(void);
 static void stop(const char *name);
 
@@ -137,6 +138,10 @@ static void print_environment() {
     free(cache_size);
   }
 #endif
+}
+
+static void error_log_callback(void *arg, int err, const char *msg) {
+  fprintf(stderr, "(%d) %s\n", err, msg);
 }
 
 static void start() {
@@ -313,6 +318,12 @@ void benchmark_open() {
   char file_name[100];
   char* err_msg = NULL;
   db_num_++;
+
+  /* Set log */
+  status = sqlite3_config(SQLITE_CONFIG_LOG, error_log_callback, NULL);
+  if (status) {
+    fprintf(stderr, "config error: %s\n", sqlite3_errstr(status));
+  }
 
   /* Open database */
   char *tmp_dir = TEST_DIR;
