@@ -18,7 +18,6 @@
 #include <time.h>
 #include <sqlite3.h>
 
-#define TEST_DIR "./"
 #define kNumBuckets 154
 
 typedef struct Histogram {

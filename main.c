@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
   init();
 
   char* default_db_path = malloc(sizeof(char) * 1024);
-  strcpy(default_db_path, ".");
+  strcpy(default_db_path, "./");
 
   for (int i = 1; i < argc; i++) {
     double d;

@@ -215,11 +215,12 @@ void benchmark_init() {
   rand_init(&rand_, 301);;
 
   struct dirent* ep;
-  DIR* test_dir = opendir(TEST_DIR);
+  DIR* test_dir = opendir(FLAGS_db);
   if (!FLAGS_use_existing_db) {
     while ((ep = readdir(test_dir)) != NULL) {
       if (starts_with(ep->d_name, "dbbench_sqlite3")) {
-        char file_name[1000] = TEST_DIR;
+        char file_name[1000];
+        strcpy(file_name, FLAGS_db);
         strcat(file_name, ep->d_name);
         remove(file_name);
       }
@@ -315,7 +316,7 @@ void benchmark_open() {
   db_num_++;
 
   /* Open database */
-  char *tmp_dir = TEST_DIR;
+  char *tmp_dir = FLAGS_db;
   snprintf(file_name, sizeof(file_name),
             "%sdbbench_sqlite3-%d.db",
             tmp_dir,
