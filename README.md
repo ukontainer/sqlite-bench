@@ -21,6 +21,7 @@ SQLite3 benchmark tool
 [OPTION]
   --benchmarks=[BENCH]          specify benchmark
   --histogram={0,1}             record histogram
+  --raw={0,1}                   output raw data
   --compression_ratio=DOUBLE    compression ratio
   --use_existing_db={0,1}       use existing database
   --num=INT                     number of entries
