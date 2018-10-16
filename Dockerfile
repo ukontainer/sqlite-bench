@@ -11,5 +11,5 @@ WORKDIR /usr/src/sqlite-bench
 RUN make
 ENV PATH /usr/src/sqlite-bench:$PATH
 
-ENTRYPOINT ["sqlite-bench", "--histogram=1"]
+ENTRYPOINT ["sqlite-bench", "--raw=1"]
 CMD ["--help"]
