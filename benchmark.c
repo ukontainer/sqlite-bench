@@ -74,24 +74,24 @@ static void wal_checkpoint(sqlite3* db_) {
 static void print_header() {
   const int kKeySize = 16;
   print_environment();
-  fprintf(stdout, "Keys:       %d bytes each\n", kKeySize);
-  fprintf(stdout, "Values:     %d bytes each\n", FLAGS_value_size);  
-  fprintf(stdout, "Entries:    %d\n", num_);
-  fprintf(stdout, "RawSize:    %.1f MB (estimated)\n",
+  fprintf(stderr, "Keys:       %d bytes each\n", kKeySize);
+  fprintf(stderr, "Values:     %d bytes each\n", FLAGS_value_size);  
+  fprintf(stderr, "Entries:    %d\n", num_);
+  fprintf(stderr, "RawSize:    %.1f MB (estimated)\n",
             (((int64_t)(kKeySize + FLAGS_value_size) * num_)
             / 1048576.0));
   print_warnings();
-  fprintf(stdout, "------------------------------------------------\n");
+  fprintf(stderr, "------------------------------------------------\n");
 }
 
 static void print_warnings() {
 #if defined(__GNUC__) && !defined(__OPTIMIZE__)
-  fprintf(stdout,
+  fprintf(stderr,
       "WARNING: Optimization is disabled: benchmarks unnecessarily slow\n"
       );
 #endif
 #ifndef NDEBUG
-  fprintf(stdout,
+  fprintf(stderr,
       "WARNING: Assertions are enabled: benchmarks unnecessarily slow\n"
       );
 #endif
@@ -199,20 +199,20 @@ static void stop(const char* name) {
     }
   }
 
-  fprintf(stdout, "%-12s : %11.3f micros/op;%s%s\n",
+  fprintf(stderr, "%-12s : %11.3f micros/op;%s%s\n",
           name,
           (finish - start_) * 1e6 / done_,
           (!message_ || !strcmp(message_, "") ? "" : " "),
           (!message_) ? "" : message_);
   if (FLAGS_raw) {
-    fprintf(stdout, "Unit: Microsecond\n");
     raw_print(stdout, &raw_);
   }
   if (FLAGS_histogram) {
-    fprintf(stdout, "Microseconds per op:\n%s\n",
+    fprintf(stderr, "Microseconds per op:\n%s\n",
             histogram_to_string(&hist_));
   }
   fflush(stdout);
+  fflush(stderr);
 }
 
 void benchmark_init() {

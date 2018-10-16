@@ -55,6 +55,7 @@ char* raw_to_string(Raw *raw_) {
 void raw_print(FILE *stream, Raw *raw_) {
   if (!raw_->data_)
     raw_calloc(raw_);
+  fprintf(stream, "num,time\n");
   for (int i = 0; i < raw_->pos_; i++)
-    fprintf(stream, "op[ %7d ] %.4f\n", i, raw_->data_[i]);
+    fprintf(stream, "%d,%.4f\n", i, raw_->data_[i]);
 }
