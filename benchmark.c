@@ -297,7 +297,7 @@ void benchmark_run() {
       benchmark_write(write_sync, SEQUENTIAL, FRESH, num_ / 1000, 100 * 1000, 1);
       wal_checkpoint(db_);
     } else if (!strcmp(name, "readseq")) {
-      benchmark_read_sequential();
+      benchmark_read(SEQUENTIAL, 1);
     } else if (!strcmp(name, "readrandom")) {
       benchmark_read(RANDOM, 1);
     } else if (!strcmp(name, "readrand100K")) {
@@ -547,21 +547,5 @@ void benchmark_read(int order, int entries_per_batch) {
   status = sqlite3_finalize(begin_trans_stmt);
   error_check(status);
   status = sqlite3_finalize(end_trans_stmt);
-  error_check(status);
-}
-
-void benchmark_read_sequential() {
-  int status;
-  sqlite3_stmt *p_stmt;
-  char* read_str = "SELECT * FROM test ORDER BY key";
-
-  status = sqlite3_prepare_v2(db_, read_str, -1, &p_stmt, NULL);
-  error_check(status);
-  for (int i = 0; i < reads_ && SQLITE_ROW == sqlite3_step(p_stmt); i++) {
-    bytes_ += sqlite3_column_bytes(p_stmt, 1) + sqlite3_column_bytes(p_stmt, 2);
-    finished_single_op();
-  }
-
-  status = sqlite3_finalize(p_stmt);
   error_check(status);
 }
