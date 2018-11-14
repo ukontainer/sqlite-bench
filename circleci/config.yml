@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu:16.04
+    steps:
+      - run:
+        name: Install toolchains
+        command: apt-get update && \
+                  apt-get install -y build-essential make git && \
+                  apt-get clean
+      - run:
+        name: Checkout repository
+        command: cd /usr/src && \
+                  git clone https://github.com/retrage/sqlite-bench.git
+      - run:
+        name: Build
+        command: cd /usr/src/sqlite-bench && \
+                  make
+      - run:
+        name: Show help
+        command: ./sqlite-bench --help
+      - run:
+        name: Benchmark fillseq
+        command: ./sqlite-bench --benchmarks=fillseq --num=1000
+      - run:
+        name: Benchmark fillrandom
+        command: ./sqlite-bench --benchmarks=fillrandom --num=1000
+      - run:
+        name: Benchmark readseq
+        command: ./sqlite-bench --benchmarks=readseq --num=1000
+      - run:
+        name: Benchmark readrandom
+        command: ./sqlite-bench --benchmarks=readrandom --num=1000
+
+
