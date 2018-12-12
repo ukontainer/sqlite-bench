@@ -1,5 +1,5 @@
-CFLAGS=-Wall -I. -O2 -DNDEBUG
-LDFLAGS=-lpthread -ldl -lm
+CFLAGS=-Wall -I. -O2 -DNDEBUG -std=c99
+LDFLAGS=-lpthread -ldl -lm -static
 SRCS=$(wildcard *.c)
 OBJS=$(SRCS:.c=.o)
 HDRS=$(wildcard *.h)
