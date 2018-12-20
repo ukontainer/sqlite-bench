@@ -1,4 +1,4 @@
-# SQLite3 Benchmark [![CircleCI](https://circleci.com/gh/retrage/sqlite-bench.svg?style=shield)](https://circleci.com/gh/retrage/sqlite-bench)
+# SQLite3 Benchmark [![CircleCI](https://circleci.com/gh/ukontainer/sqlite-bench.svg?style=shield)](https://circleci.com/gh/ukontainer/sqlite-bench)
 
 A SQLite3 benchmark tool.
 Most of the code comes from [LevelDB](https://github.com/google/leveldb).
