@@ -61,47 +61,47 @@ typedef struct RandomGenerator {
 //   readseq       -- read N times sequentially
 //   readrandom    -- read N times in random order
 //   readrand100K  -- read N/1000 100K values in sequential order in async mode
-char* FLAGS_benchmarks;
+extern char* FLAGS_benchmarks;
 
 // Number of key/values to place in database
-int FLAGS_num;
+extern int FLAGS_num;
 
 // Number of read operations to do.  If negative, do FLAGS_num reads.
-int FLAGS_reads;
+extern int FLAGS_reads;
 
 // Size of each value
-int FLAGS_value_size;
+extern int FLAGS_value_size;
 
 // Print histogram of operation timings
-bool FLAGS_histogram;
+extern bool FLAGS_histogram;
 
 // Print raw data
-bool FLAGS_raw;
+extern bool FLAGS_raw;
 
 // Arrange to generate values that shrink to this fraction of
 // their original size after compression
-double FLAGS_compression_ratio;
+extern double FLAGS_compression_ratio;
 
 // Page size. Default 1 KB.
-int FLAGS_page_size;
+extern int FLAGS_page_size;
 
 // Number of pages.
 // Default cache size = FLAGS_page_size * FLAGS_num_pages = 4 MB.
-int FLAGS_num_pages;
+extern int FLAGS_num_pages;
 
 // If true, do not destroy the existing database.  If you set this
 // flag and also specify a benchmark that wants a fresh database, that
 // benchmark will fail.
-bool FLAGS_use_existing_db;
+extern bool FLAGS_use_existing_db;
 
 // If true, we allow batch writes to occur
-bool FLAGS_transaction;
+extern bool FLAGS_transaction;
 
 // If true, we enable Write-Ahead Logging
-bool FLAGS_WAL_enabled;
+extern bool FLAGS_WAL_enabled;
 
 // Use the db with the following name.
-char* FLAGS_db;
+extern char* FLAGS_db;
 
 /* benchmark.c */
 void benchmark_init(void);
