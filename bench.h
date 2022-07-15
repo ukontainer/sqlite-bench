@@ -16,7 +16,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 #define kNumBuckets 154
 #define kNumData 1000000

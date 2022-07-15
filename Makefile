@@ -1,12 +1,22 @@
 CFLAGS=-Wall -I. -O2 -DNDEBUG -std=c99
-LDFLAGS=-lpthread -ldl -lm -static
 SRCS=$(wildcard *.c)
 OBJS=$(SRCS:.c=.o)
 HDRS=$(wildcard *.h)
 TARGET=sqlite-bench
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	LDFLAGS=-lpthread -ldl -lm
+else
+	LDFLAGS=-lpthread -ldl -lm -static
+endif
+
+
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
+
+%.o : %.c 
+	$(CC) -c $<
 
 $(OBJS): $(HDRS)
 
