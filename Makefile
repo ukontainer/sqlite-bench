@@ -16,7 +16,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
 
 %.o : %.c 
-	$(CC) -c $<
+	$(CC) $(CFLAGS) -c $<
 
 $(OBJS): $(HDRS)
 
