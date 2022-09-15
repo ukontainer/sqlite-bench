@@ -2,7 +2,7 @@
 
 A SQLite3 benchmark tool.
 Most of the code comes from [LevelDB](https://github.com/google/leveldb).
-This is C version of [doc/bench/db\_bench\_sqlite3.cc](https://github.com/google/leveldb/blob/master/doc/bench/db_bench_sqlite3.cc).
+This is C version of [benchmarks/db_bench_sqlite3.cc](https://github.com/google/leveldb/blob/main/benchmarks/db_bench_sqlite3.cc).
 
 ## Building
 
